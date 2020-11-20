@@ -1,0 +1,39 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>{{ title[0] }}</h1>
+    <h2>{{ title[1] }}</h2>
+    <ul>
+        <li>
+            <a href="story">Story</a>
+        </li>
+        <li>
+            <a href="vocabulary">Vocabulary</a>
+        </li>
+    </ul>
+    {% if story %}
+    <table>
+        <tbody>
+            {% for sentence in sentences %}
+            <tr>
+                <td>{{ sentence[0] }}</td>
+                <td>{{ sentence[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <table>
+        <tbody>
+            {% for word in words %}
+            <tr>
+                <td>{{ word[0] }}</td>
+                <td>{{ word[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>
