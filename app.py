@@ -1,4 +1,3 @@
-# from difflib import HtmlDiff
 from itertools import chain
 from re import split, sub
 
