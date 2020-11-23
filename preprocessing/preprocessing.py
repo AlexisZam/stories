@@ -2,7 +2,6 @@ from itertools import chain
 from re import split, sub
 
 from bs4 import BeautifulSoup
-from flask import Flask, render_template
 from requests import get
 
 URL = "http://life.ou.edu/stories/"
@@ -20,11 +19,7 @@ def get_links_and_alt_titles():
     for a_element in a_elements:
         link = a_element.get("href")
 
-        if (
-            link.endswith(".html")
-            and link != "momonokotarou.html"
-            and link.startswith("s")
-        ):
+        if link.endswith(".html") and link != "momonokotarou.html" and link.startswith("s"):
             link = link.replace(".html", "")
             alt_ja_title, alt_link_and_alt_en_title = (
                 a_element.get_text().strip().split("、")
@@ -114,38 +109,39 @@ def get_story(link):
     # if " ".join(story) != " ".join(ja_sentences):
     #     print(" ".join(story))
     #     print(" ".join(ja_sentences))
-    # diff = HtmlDiff().make_file(" ".join(story), " ".join(ja_sentences), context=True)
-    # with open(link, "w") as f:
-    #     f.write(diff)
 
 
 links, alt_titles = get_links_and_alt_titles()
 
 stories = {link: get_story(link) for link in links}
 
-app = Flask(__name__)
+titles = [story["title"] for story in stories.values()]
+assert alt_titles == titles
+
+# app = Flask(__name__)
+# # app.run(host="0.0.0.0", debug=True)
 
 
-@app.route("/")
-def index():
-    return render_template("index.html", links_and_alt_titles=zip(links, alt_titles))
+# @app.route("/")
+# def index():
+#     return render_template("index.html", links_and_alt_titles=zip(links, alt_titles))
 
 
-@app.route("/<path>/<subpath>")
-def zoo(path, subpath):
-    if subpath == "story":
-        story = True
-        return render_template(
-            "story.html",
-            title=stories[path]["title"],
-            sentences=stories[path]["sentences"],
-            story=story,
-        )
-    elif subpath == "vocabulary":
-        story = False
-        return render_template(
-            "story.html",
-            title=stories[path]["title"],
-            words=stories[path]["words"],
-            story=story,
-        )
+# @app.route("/<path>/<subpath>")
+# def zoo(path, subpath):
+#     if subpath == "story":
+#         story = True
+#         return render_template(
+#             "story.html",
+#             title=stories[path]["title"],
+#             sentences=stories[path]["sentences"],
+#             story=story,
+#         )
+#     elif subpath == "vocabulary":
+#         story = False
+#         return render_template(
+#             "story.html",
+#             title=stories[path]["title"],
+#             words=stories[path]["words"],
+#             story=story,
+#         )
