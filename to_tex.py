@@ -72,15 +72,12 @@ if __name__ == "__main__":
 
         for paragraph, words in zip(story["paragraphs"], story["words"]):
             paragraph[0] = escape_latex(paragraph[0])
-            d.append(
-                Command(
-                    command="colchunk",
-                    arguments=NoEscape(f"{paragraph[0]}\\footnotemark"),
-                )
-            )
-            words = map(escape_latex, words)
-            words = r"\\".join(words)
-            d.append(Command(command="footnotetext", arguments=NoEscape(words)))
+            footnotemark = NoEscape(r"\footnotemark") if words else ""
+            d.append(Command(command="colchunk", arguments=paragraph[0] + footnotemark))
+            if words:
+                words = map(escape_latex, words)
+                words = r"\\".join(words)
+                d.append(Command(command="footnotetext", arguments=NoEscape(words)))
             d.append(Command(command="colchunk", arguments=paragraph[1]))
             d.append(Command(command="colplacechunks"))
 
