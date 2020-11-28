@@ -43,7 +43,7 @@ if __name__ == "__main__":
             arguments=Command(
                 command="includegraphics",
                 arguments=path,
-                options=NoEscape(r"width=0.8\textwidth"),
+                options=NoEscape(r"width=0.6\textwidth"),
             ),
         )
     )
