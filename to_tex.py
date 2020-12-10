@@ -30,8 +30,8 @@ if __name__ == "__main__":
     d.packages.append(Package("titlepic"))
     d.packages.append(Package("xeCJK"))
 
-    d.preamble.append(Command(command="setCJKmainfont", arguments="Noto Serif JP"))
-    d.preamble.append(Command(command="setCJKsansfont", arguments="Noto Sans JP"))
+    d.preamble.append(Command(command="setCJKmainfont", arguments="Noto Serif CJK JP"))
+    d.preamble.append(Command(command="setCJKsansfont", arguments="Noto Sans CJK JP"))
 
     d.preamble.append(Command(command="title", arguments=TITLE))
     d.preamble.append(Command(command="author", arguments=AUTHOR))
